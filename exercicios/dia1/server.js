@@ -9,6 +9,7 @@ const PORT = 3000
 
 
 app.get('/welcome', (req, res) => {
+  // destruturação permite que não tenha de chamar .name no fim
   const {name} = req.query
 
   res.send(`Welcome ${name} :)` )
@@ -33,6 +34,19 @@ app.get('/todos', (req, res) => {
         completed: false
       }
     ]
+  })
+})
+
+app.get('/todos/:id', (req, res) => {
+  const {id} = req.params
+
+  console.log(id);
+
+  res.send({
+    id: id,
+    user_id: 62,
+    title: "Agnitio volva tamen stultus aut",
+    completed: false
   })
 })
 
