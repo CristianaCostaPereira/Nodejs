@@ -7,6 +7,7 @@ app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({ extended: true }))
 
 const users = []
+const todos = []
 
 const PORT = 3000
 
@@ -63,27 +64,27 @@ app.get('/users', (req, res) => {
         page: 1,
         limit: 20
       },
-    
+
       data: users
     }
   })
 })
 
 app.get('/users/:id', (req, res) => {
-  res.send({
-    id: 59,
-    name: 'Dr. Dhananjay',
-    emai: "bhattthiridhananjay_dr@konopelski-strosin.org",
-    gender: "Female",
-    status: "Inactive",
-    created_at: "2021-06-01T03:50:05.270+05:30",
-    updated_at: "2021-06-01T15:13:06.289+05:30"
-  })
+  const id = req.params.id
+  console.log(id)
 
+  const user = users.find((user) => user.id == id)[0] //returns an array
+
+  res.send(user)
 })
 
 app.post('/users', function(req, res) {
-  const data = req.body
+  const id = users.length + 1
+
+  const data = req.body // represents one user
+
+  data.id = id
 
   users.push(data)
 
