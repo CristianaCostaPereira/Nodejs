@@ -51,7 +51,27 @@ app.get('/todos/:id', (req, res) => {
 })
 
 app.get('/users', (req, res) => {
-  res.send('Cris')
+  res.send({
+    code: 200,
+    meta: {
+      pagination: {
+        total: 1800,
+        pages: 90,
+        page: 1,
+        limit: 20
+      },
+    
+    data: [{
+      id: 59,
+      name: 'Dr. Dhananjay',
+      emai: "bhattthiridhananjay_dr@konopelski-strosin.org",
+      gender: "Female",
+      status: "Inactive",
+      created_at: "2021-06-01T03:50:05.270+05:30",
+      updated_at: "2021-06-01T15:13:06.289+05:30"
+    }]
+  }
+  })
 })
 
 app.listen(PORT, () => {
