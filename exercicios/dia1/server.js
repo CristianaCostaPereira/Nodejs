@@ -89,6 +89,34 @@ app.post('/users', function(req, res) {
   res.send(data)
 })
 
+app.put('users/:id', (req, res) => {
+  const {id} = req.params
+
+  const data = req.body
+
+  const user = users.find((user) => user.id == id)
+
+  Object.assign(user, data) // aplica todas as propriedades dentro do obj
+
+  res.send(id)
+})
+
+app.patch('users/:id/activate', (req, res) => {
+  const {id} = req.params
+
+  const data = req.body
+
+  const user = users.find((user) => user.id == id)
+
+  if (user.length && user.status == 'Inactive') {
+    user.status = 'Active'
+  } else {
+    user.status == 'Inactive'
+  }
+
+  res.send(user)
+})
+
 app.listen(PORT, () => {
   console.log('Listening on port 3000');
 })
