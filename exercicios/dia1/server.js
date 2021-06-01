@@ -6,6 +6,8 @@ const app = express()
 app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({ extended: true }))
 
+const users = []
+
 const PORT = 3000
 
 
@@ -62,17 +64,7 @@ app.get('/users', (req, res) => {
         limit: 20
       },
     
-      data: [
-        {
-          id: 59,
-          name: 'Dr. Dhananjay',
-          emai: "bhattthiridhananjay_dr@konopelski-strosin.org",
-          gender: "Female",
-          status: "Inactive",
-          created_at: "2021-06-01T03:50:05.270+05:30",
-          updated_at: "2021-06-01T15:13:06.289+05:30"
-        }
-      ]
+      data: users
     }
   })
 })
@@ -91,7 +83,11 @@ app.get('/users/:id', (req, res) => {
 })
 
 app.post('/users', function(req, res) {
-  res.send(req.body)
+  const data = req.body
+
+  users.push(data)
+
+  res.send(data)
 })
 
 app.listen(PORT, () => {
