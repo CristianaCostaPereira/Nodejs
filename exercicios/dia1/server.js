@@ -61,17 +61,32 @@ app.get('/users', (req, res) => {
         limit: 20
       },
     
-    data: [{
-      id: 59,
-      name: 'Dr. Dhananjay',
-      emai: "bhattthiridhananjay_dr@konopelski-strosin.org",
-      gender: "Female",
-      status: "Inactive",
-      created_at: "2021-06-01T03:50:05.270+05:30",
-      updated_at: "2021-06-01T15:13:06.289+05:30"
-    }]
-  }
+      data: [
+        {
+          id: 59,
+          name: 'Dr. Dhananjay',
+          emai: "bhattthiridhananjay_dr@konopelski-strosin.org",
+          gender: "Female",
+          status: "Inactive",
+          created_at: "2021-06-01T03:50:05.270+05:30",
+          updated_at: "2021-06-01T15:13:06.289+05:30"
+        }
+      ]
+    }
   })
+})
+
+app.get('/users/:id', (req, res) => {
+  res.send({
+    id: 59,
+    name: 'Dr. Dhananjay',
+    emai: "bhattthiridhananjay_dr@konopelski-strosin.org",
+    gender: "Female",
+    status: "Inactive",
+    created_at: "2021-06-01T03:50:05.270+05:30",
+    updated_at: "2021-06-01T15:13:06.289+05:30"
+  })
+
 })
 
 app.listen(PORT, () => {
