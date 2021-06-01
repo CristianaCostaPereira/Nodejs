@@ -1,11 +1,12 @@
 const express = require ('express')
-// const bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 
 const app = express()
-const PORT = 3000
 
-// app.use(bodyParser.json)
+app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({ extended: true }))
+
+const PORT = 3000
 
 
 app.get('/welcome', (req, res) => {
@@ -87,6 +88,10 @@ app.get('/users/:id', (req, res) => {
     updated_at: "2021-06-01T15:13:06.289+05:30"
   })
 
+})
+
+app.post('/users', function(req, res) {
+  res.send(req.body)
 })
 
 app.listen(PORT, () => {
