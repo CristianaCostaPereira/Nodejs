@@ -16,6 +16,7 @@ module.exports = (app) => {
     })
   })
 
+  // Get user by id
   app.get('/users/:id', (req, res) => {
 
     // find(): Get the value of the first element in the array
@@ -24,16 +25,18 @@ module.exports = (app) => {
     res.send(user)
   })
 
+  // Create new user
   app.post('/users', (req, res) => {
     const user = req.body // represents one user
 
-    user.id = users.length + 1
+    user.id = users.length + 1 // creates the property id in my object
 
-    users.push(user)
+    users.push(user) // inserts into my []
 
-    res.send(user)
+    res.send(user) // returns the inserted user {}
   })
 
+  // Update user
   app.put('/users/:id', (req, res) => {
     const { id } = req.params // the same as const id = req.params.id
 
@@ -41,9 +44,9 @@ module.exports = (app) => {
 
     const user = users.find((user) => user.id == id)
 
-    Object.assign(user, data) // aplica todas as propriedades dentro do obj
+    Object.assign(user, data) // applies all properties inside of the object
 
-    res.send(id)
+    res.send(user)
   })
 
   app.patch('/users/:id/activated', (req, res) => {
@@ -56,7 +59,7 @@ module.exports = (app) => {
     if (isActive) {
       user.status = 'Active'
     } else {
-      user.status == 'Inactive'
+      user.status = 'Inactive'
     }
 
     res.send(user)
@@ -65,12 +68,12 @@ module.exports = (app) => {
   app.delete('/users/:id/', (req, res) => {
     const { id } = req.params
 
-    const userIndex = users.findIndex((user) => user.id == id)
+    const userIndex = users.findIndex((user) => user.id == id) // returns the index of the first element in the array that matches the condition or -1 if no match was found
 
-    const user = users[userIndex]
+    const user = users[userIndex] // gives the element in the users [], it is a number
 
     if (userIndex !== -1) {
-      users.splice(userIndex, 1)
+      users.splice(userIndex, 1) // removes one element from the []
     }
 
     res.send(user)

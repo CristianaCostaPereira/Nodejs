@@ -9,7 +9,7 @@ module.exports = (app) => {
           total: todos.length,
           pages: 0,
           page: 0,
-          limit: 0.
+          limit: 0
         }
       },
       data: todos
