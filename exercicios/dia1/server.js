@@ -50,6 +50,10 @@ app.get('/todos/:id', (req, res) => {
   })
 })
 
+app.get('/users', (req, res) => {
+  res.send('Cris')
+})
+
 app.listen(PORT, () => {
   console.log('Listening on port 3000');
 })
