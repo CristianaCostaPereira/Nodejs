@@ -9,6 +9,7 @@
     "dev": "node exercicios/dia1/server.js"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1"
   }
 }
