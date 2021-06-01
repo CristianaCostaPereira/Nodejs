@@ -1,0 +1,14 @@
+{
+  "name": "Nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/CristianaCostaPereira/Nodejs.git",
+  "author": "CristianaCostaPereira <cristiana.vc.pereira@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node exercicios/dia1/server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
