@@ -72,11 +72,9 @@ app.get('/users', (req, res) => {
 
 app.get('/users/:id', (req, res) => {
   const id = req.params.id
-  console.log(id)
 
-  const user = users.find((user) => user.id == id)[0] //returns an array
-
-  res.send(user)
+  // find(): Get the value of the first element in the array
+  res.send(users.find((user) => user.id == id))
 })
 
 app.post('/users', function(req, res) {
