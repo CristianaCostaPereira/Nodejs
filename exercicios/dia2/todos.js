@@ -35,12 +35,43 @@ module.exports = (app, db) => {
   })
 
   app.post('/todos', (req, res) => {
-    const todo = req.body // represents one todo
+    const todo = req.body;
 
-    todo.id = todos.length + 1
+    db.query("INSERT INTO todos SET ?", [todo], (error, results, _) => {
+      if (error) {
+        throw error;
+      }
 
-    todos.push(todo)
+      const { insertId } = results;
 
-    res.send(todo)
+      db.query("SELECT * FROM todos WHERE id = ? LIMIT 1", [insertId], (error, results, _) => {
+          if (error) {
+            throw error;
+          }
+
+          res.send(results[0]);
+        }
+      );
+    });
   })
+
+  app.put("/todos/:id", (req, res) => {
+    const { id } = req.params
+
+    const todo = req.body
+
+    db.query('UPDATE todos SET ? WHERE id = ?', [todo, id], (error, results, _) => {
+      if (error) {
+        throw error
+      }
+
+      db.query('SELECT * FROM todos WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+        if (error) {
+          throw error
+        }
+
+        res.send(results[0])
+      })
+    })
+  });
 }
