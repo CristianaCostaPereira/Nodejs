@@ -74,4 +74,40 @@ module.exports = (app, db) => {
       })
     })
   });
+
+  app.patch("/todos/:id/completed", (req, res) => {
+    const { id } = req.params
+
+    const { isCompleted } = req.body
+
+    const status = isCompleted ? 1 : 0
+
+    db.query('UPDATE todos SET status = ? WHERE id = ?', [status, id], (error, results, _) => {
+      if (error) {
+        throw error
+      }
+
+      res.send(isCompleted)
+    })
+  });
+
+  app.delete("/todos/:id/", (req, res) => {
+    const { id } = req.params
+
+    db.query('SELECT * FROM todos WHERE id = ?', [id], (error, results, _) => {
+      if (error) {
+        throw error
+      }
+
+      const [todo] = results
+
+      db.query('DELETE FROM todos WHERE id = ?', [id], (error, _, __) => {
+        if (error) {
+          throw error
+        }
+
+        res.send(todo)
+      })
+    })
+  })
 }
