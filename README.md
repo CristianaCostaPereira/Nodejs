@@ -23,3 +23,6 @@ Build a backend environment
           "dev": "nodemon my/path"
       }
   3. yarn dev
+
+- For communicate to the data base, install:
+  1. yarn add mysql2
