@@ -63,15 +63,23 @@ module.exports = (app, db) => {
 
   // Update user
   app.put("/users/:id", (req, res) => {
-    const { id } = req.params; // the same as const id = req.params.id
+    const { id } = req.params
 
-    const data = req.body;
+    const user = req.body
 
-    const user = users.find((user) => user.id == id);
+    db.query('UPDATE users SET ? WHERE id = ?', [user, id], (error, results, _) => {
+      if (error) {
+        throw error
+      }
 
-    Object.assign(user, data); // applies all properties inside of the object
+      db.query('SELECT * FROM users WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+        if (error) {
+          throw error
+        }
 
-    res.send(user);
+        res.send(results[0])
+      })
+    })
   });
 
   app.patch("/users/:id/activated", (req, res) => {
