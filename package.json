@@ -6,7 +6,7 @@
   "author": "CristianaCostaPereira <cristiana.vc.pereira@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon exercicios/dia1/server.js"
+    "dev": "nodemon exercicios/dia2/server.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

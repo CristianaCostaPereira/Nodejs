@@ -1,26 +1,19 @@
 const users = []
 
-module.exports = (app, db) => {
+module.exports = (app) => {
   app.get('/users', (req, res) => {
-
-    db.query('SELECT * FROM users', (error, results, fields) => {
-      if (error) {
-        throw error
-      }
-
       res.send({
         code: 200,
         meta: {
           pagination: {
-            total: results.length, // had users.length before
+            total: users.length,
             pages: 1,
             page: 1,
             limit: undefined
           }
         },
-        data: results // had users before
+        data: users 
       })
-    })
   })
 
   // Get user by id
