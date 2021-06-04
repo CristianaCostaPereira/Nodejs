@@ -21,5 +21,5 @@ Build a backend environment
   2. change package.json to:
       script": {
           "dev": "nodemon my/path"
-        }
+      }
   3. yarn dev

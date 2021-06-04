@@ -15,7 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 users(app)
 todos(app)
 
-
 app.get('/welcome', (req, res) => {
   // destruturação permite que não tenha de chamar .name no fim
   const {name} = req.query
