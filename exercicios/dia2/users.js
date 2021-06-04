@@ -67,6 +67,8 @@ module.exports = (app, db) => {
 
     const user = req.body
 
+    // SET so we do not have to write all the params in my object
+
     db.query('UPDATE users SET ? WHERE id = ?', [user, id], (error, results, _) => {
       if (error) {
         throw error
@@ -82,20 +84,21 @@ module.exports = (app, db) => {
     })
   });
 
+  // Just chages ONE property
   app.patch("/users/:id/activated", (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params
 
-    const { isActive } = req.body;
+    const { isActive } = req.body
 
-    const user = users.find((user) => user.id == id);
+    const status = isActive ? 1 : 0
 
-    if (isActive) {
-      user.status = "Active";
-    } else {
-      user.status = "Inactive";
-    }
+    db.query('UPDATE users SET status = ? WHERE id = ?', [status, id], (error, results, _) => {
+      if (error) {
+        throw error
+      }
 
-    res.send(user);
+      res.send(isActive)
+    })
   });
 
   app.delete("/users/:id/", (req, res) => {
