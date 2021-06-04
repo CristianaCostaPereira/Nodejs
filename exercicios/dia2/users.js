@@ -1,5 +1,3 @@
-const users = [];
-
 module.exports = (app, db) => {
   app.get("/users", (req, res) => {
     db.query("SELECT * FROM users", (error, results, fields) => {
@@ -102,16 +100,22 @@ module.exports = (app, db) => {
   });
 
   app.delete("/users/:id/", (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params
 
-    const userIndex = users.findIndex((user) => user.id == id); // returns the index of the first element in the array that matches the condition or -1 if no match was found
+    db.query('SELECT * FROM users WHERE id = ?', [id], (error, results, _) => {
+      if (error) {
+        throw error
+      }
 
-    const user = users[userIndex]; // gives the element in the users [], it is a number
+      const [user] = results
 
-    if (userIndex !== -1) {
-      users.splice(userIndex, 1); // removes one element from the []
-    }
+      db.query('DELETE FROM users WHERE id = ?', [id], (error, _, __) => {
+        if (error) {
+          throw error
+        }
 
-    res.send(user);
-  });
-};
+        res.send(user)
+      })
+    })
+  })
+}
