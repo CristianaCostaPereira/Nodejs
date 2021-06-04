@@ -1,5 +1,6 @@
 const express = require ('express')
 const bodyParser = require('body-parser')
+const mysql = require ('mysql2')
 
 // import JS files
 const users = require('./users')
@@ -12,16 +13,29 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-users(app)
-todos(app)
-
-app.get('/welcome', (req, res) => {
-  // destruturação permite que não tenha de chamar .name no fim
-  const {name} = req.query
-
-  res.send(`Welcome ${name} :)`)
+const connection = mysql.createConnection({
+  host: 'localhost', // Could be an IP
+  user: 'root',
+  password: 'Orquideapurpura6',
+  database: 'notes_app',
 })
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+connection.connect((error) => {
+  if (error) {
+    throw error
+  }
+
+  users(app)
+  todos(app)
+
+  app.get('/welcome', (req, res) => {
+    // destruturação permite que não tenha de chamar .name no fim
+    const {name} = req.query
+
+    res.send(`Welcome ${name} :)`)
+  })
+
+  app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+  })
 })
