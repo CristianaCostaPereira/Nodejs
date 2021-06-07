@@ -67,15 +67,15 @@ module.exports = (app, db) => {
 
     validate(user, rules).then(() => {
       sanitize(user, sanitizationRules)
-      
+
       db.query("INSERT INTO users SET ?", [user], (error, results, _) => {
         if (error) {
           res.status(400).send(error)
           throw error
         }
-  
+
         const { insertId } = results;
-  
+
         db.query("SELECT * FROM users WHERE id = ? LIMIT 1", [insertId], (error, results, _) => {
           if (error) {
             res.status(400).send(error)

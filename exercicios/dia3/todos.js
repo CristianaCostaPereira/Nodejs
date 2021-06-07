@@ -104,13 +104,13 @@ module.exports = (app, db) => {
     })
   })
 
+  // PUT request with validation
   app.put("/todos/:id", (req, res) => {
     const { id } = req.params
 
     const todo = req.body
 
     const rules = {
-      // title: 'required|min:4|alphaNumeric', // nota: se colocar espaço, alphanumeric não funciona
       title: [
         validations.required,
         validations.regex(['^[a-zA-Z0-9\\s]+$']),
@@ -135,12 +135,12 @@ module.exports = (app, db) => {
         if (error) {
           throw error
         }
-  
+
         db.query('SELECT * FROM todos WHERE id = ? LIMIT 1', [id], (error, results, _) => {
           if (error) {
             throw error
           }
-  
+
           res.send(results[0])
         })
       })
@@ -149,19 +149,40 @@ module.exports = (app, db) => {
     })
   });
 
+  // PATCH request with validation
   app.patch("/todos/:id/completed", (req, res) => {
     const { id } = req.params
 
-    const { isCompleted } = req.body
+    const bodyData = req.body // Because I want to pass my key/value pairs
 
-    const completed = isCompleted ? 1 : 0
+    const rules = {
+      isCompleted: 'required|boolean'
+    }
 
-    db.query('UPDATE todos SET completed = ? WHERE id = ?', [completed, id], (error, results, _) => {
-      if (error) {
-        throw error
-      }
+    const messages = {
+      isCompleted: 'Field completed is required',
+    }
 
-      res.send(isCompleted)
+    const sanitizationRules = {
+      isCompleted: 'escape|strip_tags'
+    }
+
+    validate(bodyData, rules, messages).then(() => {
+
+      const isCompleted = bodyData.isCompleted // To write in the BD
+
+      sanitize(bodyData, sanitizationRules)
+
+      db.query('UPDATE todos SET completed = ? WHERE id = ?', [isCompleted, id], (error, results, _) => {
+        if (error) {
+          throw error
+        }
+
+        res.send(bodyData)
+      })
+
+    }).catch((error) => {
+      res.status(400).send(error)
     })
   });
 
