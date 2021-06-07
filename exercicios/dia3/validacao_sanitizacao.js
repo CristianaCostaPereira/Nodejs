@@ -16,7 +16,7 @@ app.post('/users', (req, res) => {
 
   const rules = {
     name: 'required',
-    email: 'required:active|email',
+    email: 'required|email',
     username: 'required|alphaNumeric',
     active: 'boolean',
     phone: [
@@ -32,6 +32,29 @@ app.post('/users', (req, res) => {
     username: 'escape|strip_tags',
     active: 'escape|strip_tags',
     phone: 'escape|strip_tags',
+  }
+
+  validate(data, rules, sanitizationRules)
+    .then((value) => {
+      sanitize(value, sanitizationRules)
+      
+      res.send(value)
+    }).catch((error) => {
+      res.status(400).send(error)
+    })
+})
+
+app.post('/todos', (req, res) => {
+  const data = req.body
+
+  const rules = {
+    title: 'required',
+    completed: 'boolean'
+  }
+
+  const sanitizationRules = {
+    title: 'trim|escape|strip_tags',
+    completed: 'escape|strip_tags'
   }
 
   validate(data, rules, sanitizationRules)
