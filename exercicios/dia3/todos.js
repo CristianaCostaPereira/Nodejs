@@ -56,10 +56,10 @@ module.exports = (app, db) => {
     const todo = req.body;
     
     const rules = {
-      // title: 'required|min:4|alphaNumeric', // nota: se colcoar espaço, alphanumeric não funciona
+      // title: 'required|min:4|alphaNumeric', // nota: se colocar espaço, alphanumeric não funciona
       title: [
         validations.required,
-        validations.regex(['^[a-z0-9 ]+$']),
+        validations.regex(['^[a-zA-Z0-9\s]+$']),
         validations.min([4])
       ],
       user_id: 'required|number',
@@ -71,17 +71,17 @@ module.exports = (app, db) => {
       regex: 'Field must be alpha numeric (spaces are allowed)',
     }
 
-    // const sanitizationRules = {
-    //     title: 'trim|escape|strip_tags',
-    //     user_id: 'escape|strip_tags',
-    //     completed: 'escape|strip_tags'
-    //   }
+    const sanitizationRules = {
+        title: 'trim|escape|strip_tags',
+        user_id: 'escape|strip_tags',
+        completed: 'escape|strip_tags'
+      }
 
     validate(todo, rules, messages)
       .then((value) => {
 
 
-        // sanitize(todo, sanitizationRules)
+        sanitize(todo, sanitizationRules)
 
         console.log(value);
 

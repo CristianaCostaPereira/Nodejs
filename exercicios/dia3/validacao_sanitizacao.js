@@ -1,35 +1,3 @@
-// module.exports = (app, db) => {
-//   app.post('/todos', (req, res) => {
-//     const data = req.body
-
-//     const rules = {
-//       title: 'required|min:4|alpha_numeric',
-//       user_id: 'required|number',
-//       completed: 'boolean',
-//       created_at: 'date',
-//       updated_at: 'date'
-//     }
-
-//     // const sanitizationRules = {
-//       //   title: 'trim',
-//       //   user_id: 'escape|strip_tags',
-//       //   completed: 'escape|strip_tags'
-//       // }
-
-//       // console.log(sanitize(data, sanitizationRules))
-
-
-//       validate(data, rules)
-//       .then((value) => {
-//         // sanitize(value, sanitizationRules)
-
-//         res.send(value)
-//       }).catch((error) => {
-//         res.status(400).send(error)
-//       })
-//   })
-// }
-
 
 // // app.post('/users', (req, res) => {
 // //   const data = req.body
