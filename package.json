@@ -6,7 +6,7 @@
   "author": "CristianaCostaPereira <cristiana.vc.pereira@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon exercicios/dia3/validacao_sanitizacao.js"
+    "dev": "nodemon exercicios/dia3/server.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
