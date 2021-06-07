@@ -1,6 +1,5 @@
 const { sanitize } = require('indicative/sanitizer')
 const { validate, validations } = require('indicative/validator')
-// const { sanitize } = require('indicative/sanitizer')
 
 module.exports = (app, db) => {
   // get all todos
@@ -52,9 +51,10 @@ module.exports = (app, db) => {
     );
   })
 
+  // POST request with validation
   app.post('/todos', (req, res) => {
     const todo = req.body;
-    
+
     const rules = {
       // title: 'required|min:4|alphaNumeric', // nota: se colocar espaço, alphanumeric não funciona
       title: [
@@ -72,41 +72,36 @@ module.exports = (app, db) => {
     }
 
     const sanitizationRules = {
-        title: 'trim|escape|strip_tags',
-        user_id: 'escape|strip_tags',
-        completed: 'escape|strip_tags'
-      }
+      title: 'trim|escape|strip_tags',
+      user_id: 'escape|strip_tags',
+      completed: 'escape|strip_tags',
+      completion_date: 'escape|strip_tags'
+    }
 
-    validate(todo, rules, messages)
-      .then((value) => {
+    validate(todo, rules, messages).then(() => {
 
+      sanitize(todo, sanitizationRules)
 
-        sanitize(todo, sanitizationRules)
+      db.query("INSERT INTO todos SET ?", [todo], (error, results, _) => {
+        if (error) {
+          throw error;
+        }
 
-        console.log(value);
+        const { insertId } = results;
 
-        db.query("INSERT INTO todos SET ?", [todo], (error, results, _) => {
+        db.query("SELECT * FROM todos WHERE id = ? LIMIT 1", [insertId], (error, results, _) => {
           if (error) {
-            console.log('error' + error);
             throw error;
           }
-    
-          const { insertId } = results;
 
-          db.query("SELECT * FROM todos WHERE id = ? LIMIT 1", [insertId], (error, results, _) => {
-              if (error) {
-                throw error;
-              }
-    
-              res.send(results[0]);
-            }
-          );
-        });
-
-      }).catch((error) => {
-        console.log('fail');
-        res.status(400).send(error)
+          res.send(results[0]);
+        })
       })
+
+    }).catch((error) => {
+      console.log('fail');
+      res.status(400).send(error)
+    })
   })
 
   app.put("/todos/:id", (req, res) => {

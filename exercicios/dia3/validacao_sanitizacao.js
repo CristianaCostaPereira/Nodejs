@@ -1,32 +1,49 @@
+// Eleandro code
+const express = require('express')
+const bodyParser = require('body-parser')
 
-// // app.post('/users', (req, res) => {
-// //   const data = req.body
+const { validate, validations } = require('indicative/validator')
+const { sanitize } = require('indicative/sanitizer')
 
-// //   const rules = {
-// //     name: 'required',
-// //     email: 'required|email',
-// //     username: 'required|alphaNumeric',
-// //     active: 'boolean',
-// //     phone: [
-// //       validations.required,
-// //       validations.regex(['^((\\+|00)\\d{1,3}\\s{1})?\\d{9}$']),
-// //     ],
-// //   }
+const PORT = 3000
 
-// //   const sanitizationRules = {
-// //     name: 'trim|escape|strip_tags',
-// //     username: 'lowerCase|escape|strip_tags',
-// //     email: 'lowercase|escape|strip_tags',
-// //     active: 'escape|strip_tags',
-// //     phone: 'escape|strip_tags',
-// //   }
+const app = express()
 
-// //   validate(data, rules, sanitizationRules)
-// //     .then((value) => {
-// //       sanitize(value, sanitizationRules)
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.post('/users', (req, res) => {
+  const data = req.body
+
+  const rules = {
+    name: 'required',
+    email: 'required:active|email',
+    username: 'required|alphaNumeric',
+    active: 'boolean',
+    phone: [
+      validations.required,
+      validations.regex(['^((\\+|00)\\d{1,3}\\s{1})?\\d{9}$']),
+    ],
+  }
+
+  const sanitizationRules = {
+    name: 'trim|escape|strip_tags',
+    username: 'lowerCase|escape|strip_tags',
+    email: 'escape|strip_tags',
+    active: 'escape|strip_tags',
+    phone: 'escape|strip_tags',
+  }
+
+  validate(data, rules, sanitizationRules)
+    .then((value) => {
+      sanitize(value, sanitizationRules)
       
-// //       res.send(value)
-// //     }).catch((error) => {
-// //       res.status(400).send(error)
-// //     })
-// // })
+      res.send(value)
+    }).catch((error) => {
+      res.status(400).send(error)
+    })
+})
+
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`)
+})
