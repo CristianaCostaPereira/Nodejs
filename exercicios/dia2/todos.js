@@ -19,40 +19,6 @@ module.exports = (app, db) => {
         data: results,
       });
     });
-
-    // Pagination
-    // const { page, limit } = req.query
-
-    // db.query('SELECT COUNT(*) FROM todos', (error, results) => {
-    //   if (error) {
-    //     throw error
-    //   }
-
-    //   const count = results[0]['COUNT(*)']
-    //   const limitAsNumber = Number(limit)
-    //   const pageAsNumber = Number(page)
-    //   const offset = Number((pageAsNumber - 1) * limit)
-
-    //   db.query('SELECT * FROM todos LIMIT ?, ?', [offset, limitAsNumber], (error, results, _) => {
-    //     if (error) {
-    //       throw error
-    //     }
-
-    //     const pages = Math.ceil(count / limit)
-
-    //     res.send({
-    //       code: 200,
-    //       meta: {
-    //         pagination: {
-    //           total: count,
-    //           pages: pages,
-    //           page: pageAsNumber,
-    //         }
-    //       },
-    //       data: results,
-    //     })
-    //   })
-    // })
   })
 
   app.get('/todos/:id', (req, res) => {
