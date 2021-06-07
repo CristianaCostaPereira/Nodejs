@@ -109,18 +109,43 @@ module.exports = (app, db) => {
 
     const todo = req.body
 
-    db.query('UPDATE todos SET ? WHERE id = ?', [todo, id], (error, results, _) => {
-      if (error) {
-        throw error
-      }
+    const rules = {
+      // title: 'required|min:4|alphaNumeric', // nota: se colocar espaço, alphanumeric não funciona
+      title: [
+        validations.required,
+        validations.regex(['^[a-zA-Z0-9\\s]+$']),
+        validations.min([4])
+      ],
+      user_id: 'required|number',
+      completed: 'required|boolean',
+      completion_date: 'date'
+    }
 
-      db.query('SELECT * FROM todos WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+    const sanitizationRules = {
+      title: 'trim|escape|strip_tags',
+      user_id: 'escape|strip_tags',
+      completed: 'escape|strip_tags',
+      completion_date: 'escape|strip_tags'
+    }
+
+    validate(todo, rules).then(() => {
+      sanitize(todo, sanitizationRules)
+
+      db.query('UPDATE todos SET ? WHERE id = ?', [todo, id], (error, results, _) => {
         if (error) {
           throw error
         }
-
-        res.send(results[0])
+  
+        db.query('SELECT * FROM todos WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+          if (error) {
+            throw error
+          }
+  
+          res.send(results[0])
+        })
       })
+    }).catch((error) => {
+      res.status(400).send(error)
     })
   });
 
