@@ -59,7 +59,7 @@ module.exports = (app, db) => {
       // title: 'required|min:4|alphaNumeric', // nota: se colocar espaço, alphanumeric não funciona
       title: [
         validations.required,
-        validations.regex(['^[a-zA-Z0-9 ]+$']),
+        validations.regex(['^[a-zA-Z0-9\\s]+$']),
         validations.min([4])
       ],
       user_id: 'required|number',
