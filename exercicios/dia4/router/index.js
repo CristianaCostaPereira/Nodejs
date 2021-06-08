@@ -1,3 +1,5 @@
 const publicRoutes = require('./public')
 
-module.exports
+module.exports = {
+  public: publicRoutes
+}
