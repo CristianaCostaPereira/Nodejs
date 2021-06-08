@@ -1,3 +1,4 @@
+// Like a login route, for exemple
 const { Router } = require('express')
 
 const router = Router()
