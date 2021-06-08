@@ -37,7 +37,7 @@ app.post('/users', (req, res) => {
   validate(data, rules)
     .then((value) => {
       sanitize(value, sanitizationRules)
-      
+
       res.send(value)
     }).catch((error) => {
       res.status(400).send(error)

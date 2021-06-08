@@ -8,9 +8,9 @@ module.exports = {
     for (const key in req.body) {
       sanitizers[key] = 'escape'
     }
-    
+
     sanitize(req.body, sanitizers)
-    
+
     for (const key in req.query) {
       sanitizers[key] = 'escape'
     }
@@ -27,7 +27,7 @@ module.exports = {
     }
 
     sanitize(req.body, sanitizers)
-    
+
     for (const key in req.query) {
       sanitizers[key] = 'strip_tags'
     }
