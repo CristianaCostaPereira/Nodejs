@@ -8,7 +8,15 @@ module.exports = {
   bootstrap() {
 
     app.get('/welcome', (req, res) => {
-      res.send('hello')
+      const { name } = req.query
+      
+      res.send(`Welcome ${name ? ' ' + name : ''}`)
+    })
+
+    app.post('/greeting', (req, res) => {
+      const { name } = req.query
+      
+      res.send('Hello')
     })
 
     app.listen(EXPRESS_PORT, () => {
