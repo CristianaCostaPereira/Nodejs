@@ -8,8 +8,8 @@ router.get('/welcome', (req, res) => {
   res.send(`Welcome ${name ? ' ' + name : ''}`)
 })
 
-router.post('/greeting', (req, res) => {
-  const { name } = req.query
+router.post('/users', (req, res) => {
+  const data = req.body
 
-  res.send('Hello')
+  res.send(data)
 })
