@@ -5,6 +5,7 @@ module.exports = (req, res, next) => {
   const sanitizers = {}
 
   // Para validar todas as chaves, seja qual for a requisição em que estou
+  // for..in returns a list of keys on the object being iterated,
   for (const key in req.body) {
     sanitizers[key] = 'escape'
   }

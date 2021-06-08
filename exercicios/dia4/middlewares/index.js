@@ -11,6 +11,7 @@ const middlewares = [
   xss
 ]
 
+// for..of returns a list of values of the numeric properties of the object being iterated
 module.exports = {
   register(app) {
     for (const middleware of middlewares) {
