@@ -17,8 +17,8 @@ app.post('/users', (req, res) => {
 
   const rules = {
     name: 'required',
-    email: 'required:active|email',
-    username: 'required|alphaNumeric',
+    email: 'required|email',
+    username: 'alphaNumeric',
     active: 'boolean',
     phone: [
       validations.required,
@@ -28,13 +28,13 @@ app.post('/users', (req, res) => {
 
   const sanitizationRules = {
     name: 'trim|escape|strip_tags',
+    email: 'lowerCase|escape|strip_tags',
     username: 'lowerCase|escape|strip_tags',
-    email: 'escape|strip_tags',
     active: 'escape|strip_tags',
     phone: 'escape|strip_tags',
   }
 
-  validate(data, rules, sanitizationRules)
+  validate(data, rules)
     .then((value) => {
       sanitize(value, sanitizationRules)
       
