@@ -62,7 +62,7 @@ module.exports = (app, db) => {
         validations.regex(['^[a-zA-Z0-9\\s]+$']),
         validations.min([4])
       ],
-      user_id: 'required|number',
+      user_id: 'required|integer',
       completed: 'required|boolean',
       completion_date: 'date'
     }

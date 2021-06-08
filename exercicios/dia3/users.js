@@ -44,7 +44,7 @@ module.exports = (app, db) => {
     const rules = {
       name: [
         validations.required,
-        validations.regex(['^[a-zA-Z0-9\\s]+$'])
+        validations.regex(['^[a-zA-Z\\s]+$'])
       ],
       email: 'required|email',
       gender: 'required|number',
@@ -57,6 +57,8 @@ module.exports = (app, db) => {
     }
 
     const sanitizationRules = {
+      // escape: only remove &, ", ', < and > characters
+      // strip-tags: removes html tags
       name: 'trim|escape|strip_tags',
       email: 'trim|lowerCase|escape|strip_tags',
       gender: 'escape|strip_tags',

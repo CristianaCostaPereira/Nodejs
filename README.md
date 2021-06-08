@@ -26,3 +26,8 @@ Build a backend environment
 
 - For communicate to the data base, install:
   1. yarn add mysql2
+
+- For validation and sanitize the data, install indicative:
+  1. yarn add indicative (you can check documentation in: [https://indicative.adonisjs.com/guides/master/introduction])
+
+
