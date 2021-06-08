@@ -1,41 +1,18 @@
-const express = require ('express')
-const bodyParser = require('body-parser')
-const mysql = require ('mysql2')
-
-// import JS files
-const users = require('./users')
-const todos = require('./todos')
-
-const PORT = 3000
+const express = require('express')
 
 const app = express()
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+const EXPRESS_PORT = 3000
 
-const db = mysql.createConnection({
-  host: 'localhost', // Could be an IP
-  user: 'root',
-  password: 'Orquideapurpura6',
-  database: 'notes_app',
-})
+module.exports = {
+  bootstrap() {
 
-db.connect((error) => {
-  if (error) {
-    throw error
+    app.get('/welcome', (req, res) => {
+      res.send('hello')
+    })
+
+    app.listen(EXPRESS_PORT, () => {
+      console.log(`Listening on port ${EXPRESS_PORT}`);
+    })
   }
-
-  users(app, db)
-  todos(app, db)
-
-  app.get('/welcome', (req, res) => {
-    // destruturação permite que não tenha de chamar .name no fim
-    const {name} = req.query
-
-    res.send(`Welcome ${name} :)`)
-  })
-
-  app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
-  })
-})
+}
