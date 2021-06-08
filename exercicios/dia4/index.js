@@ -8,7 +8,7 @@ const routes = require('./routes')
 // Responsável por arrancar a nossa BD
 // the 'app' bellow is the same as our server
 // bootstrap é uma propriedade que invoca uma função
-db.start((_) => {
+db.start(() => {
   server.bootstrap((appServer) => {
     middlewares.register(appServer)
     routes.register(appServer)
