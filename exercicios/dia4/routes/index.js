@@ -1,5 +1,7 @@
 const publicRoutes = require('./public')
 
 module.exports = {
-  public: publicRoutes
+  register(app) {
+    app.use(publicRoutes)
+  }
 }
