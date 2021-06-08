@@ -8,9 +8,9 @@ module.exports = (req, res) => {
     password: 'required'
 
   }).then((value) => {
-    db.query('SELECT * FROM users WHERE email = ? AND password = ? AND status != 0', [value.username, value.password], (error, results) => {
+    db.query('SELECT * FROM users WHERE email = ? AND password = ? AND status != 0', [value.email, value.password], (error, results) => {
       if (results.length === 0) {
-        res.status(400).send('Cannot find any account that matches the given username and password')
+        res.status(400).send('Cannot find any account that matches the given email and password')
 
       } else {
         res.send((results[0].id + 483274952349).toString())

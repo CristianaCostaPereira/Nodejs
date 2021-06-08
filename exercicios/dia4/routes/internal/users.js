@@ -47,7 +47,7 @@ router.get('/:id', (req, res) => {
       throw error
     }
 
-    res.send(results[0])
+    res.send(results[0]) // gets the first element and returns
   })
 })
 
@@ -56,6 +56,7 @@ router.put('/:id', (req, res) => {
 
   const user = req.body
 
+  // SET so we do not have to write all the params in my object
   db.query('UPDATE users SET ? WHERE id = ?', [user, id], (error, results, _) => {
     if (error) {
       throw error
