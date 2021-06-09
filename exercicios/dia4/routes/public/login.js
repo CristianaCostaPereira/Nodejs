@@ -13,7 +13,7 @@ module.exports = (req, res) => {
         res.status(400).send('Cannot find any account that matches the given email and password')
 
       } else {
-        res.send((results[0].id + 483274952349).toString())
+        res.send((results[0].id + 483274952349).toString()) // like it was my salt
       }
     })
   }).catch((error) => res.status(400).send(error))

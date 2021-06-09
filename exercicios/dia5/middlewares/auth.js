@@ -1,9 +1,11 @@
 const db = require('../db')
+const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
-  const authorization = req.header('Authorization')
+  const token = req.header('Authorization') // my token
+  const secret = "hello"
 
-  const id = +authorization - 483274952349 // to make it hard to hack
+  const { id }  = jwt.verify(token, secret) // destruturação do objecto que resultar, para só extrair o id
 
   db.query('SELECT * FROM users WHERE id = ?', [id], (error, results) => {
     if (error) {
