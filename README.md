@@ -30,4 +30,7 @@ Build a backend environment
 - For validation and sanitize the data, install indicative:
   1. yarn add indicative (you can check documentation in: [https://indicative.adonisjs.com/guides/master/introduction])
 
+- Install bcrypt and jsonwebtoken by running the follow commands:
+  1. yarn add bcrypt [https://www.npmjs.com/package/bcrypt]
+  2. yarn add jsonwebtoken [https://www.npmjs.com/package/jsonwebtoken]
 
