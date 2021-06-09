@@ -18,6 +18,8 @@ module.exports = (req, res) => {
             if (match) {
               const secret = "hello"
 
+              delete results[0].password // para não ter de ser preciso a row na BD
+
               // sign para criptografar um valor usando o secret
               const token = jwt.sign({id: results[0].id}, secret) // will give me my token
 

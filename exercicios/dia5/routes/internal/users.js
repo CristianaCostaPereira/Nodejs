@@ -4,13 +4,12 @@ const { sanitize } = require('indicative/sanitizer')
 const bcrypt = require('bcrypt')
 
 const db = require('../../db')
-const auth = require('../../middlewares/auth')
 
 function removePasswordProperty(object) {
   delete object.password
 }
 
-router.get('/', auth, (req, res) => {
+router.get('/', (req, res) => {
   const { page, limit } = req.query
 
   db.query('SELECT COUNT(*) FROM users', (error, results) => {
@@ -69,7 +68,11 @@ router.get('/:id', (req, res, next) => {
 
     removePasswordProperty(results[0])
 
-    res.send(results[0])
+    res.send({
+      code: 200,
+      meta: null,
+      data: results[0]
+    })
   })
 })
 
@@ -107,7 +110,11 @@ router.post('/', (req, res) => {
 
           removePasswordProperty(results[0])
 
-          res.send(results[0])
+          res.send({
+            code: 200,
+            meta: null,
+            data: results[0]
+          })
         })
       })
     }).catch((error) => { throw error })
@@ -152,11 +159,55 @@ router.put('/:id', (req, res) => {
 
         removePasswordProperty(results[0])
 
-        res.send(results[0])
+        res.send({
+          code: 200,
+          meta: null,
+          data: results[0]
+        })
       })
     })
   }).catch((error) => {
     res.status(400).send(error)
+  })
+})
+
+router.patch('/:id/activated', (req, res) => {
+  const { id } = req.params
+
+  const { isActive } = req.body
+
+  const status = isActive ? 1 : 0
+
+  db.query('UPDATE users SET status = ? WHERE id = ?', [status, id], (error, results, _) => {
+    if (error) {
+      throw error
+    }
+
+    res.send(isActive)
+  })
+})
+
+router.delete('/:id', (req, res) => {
+  const { id } = req.params
+
+  db.query('SELECT * FROM users WHERE id = ?', [id], (error, results, _) => {
+    if (error) {
+      throw error
+    }
+
+    const [user] = results
+
+    db.query('DELETE FROM users WHERE id = ?', [id], (error, _, __) => {
+      if (error) {
+        throw error
+      }
+
+      res.send({
+        code: 200,
+        meta: null,
+        data: user
+      })
+    })
   })
 })
 
