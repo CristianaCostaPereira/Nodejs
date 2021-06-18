@@ -5,7 +5,7 @@ const { JsonWebTokenError } = jwt
 module.exports = (req, res, next) => {
   const token = req.header('Authorization') // my token (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNjIzMjM4MTYxfQ.4lfAuyCaQImyuYj1gUM2tEGS0dGdP1_Ke5ByPUwVJf0)
 
-  if (!authorization) {
+  if (!token) {
     res.status(400).send('JWT not provided')
 
     return
