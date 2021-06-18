@@ -1,6 +1,6 @@
 module.exports = {
   host: 'localhost',
   user: 'root',
-  password: 'Orquideapurpura6',
+  password: 'Admin123',
   database: 'notes_app',
 }

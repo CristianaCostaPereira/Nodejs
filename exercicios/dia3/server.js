@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 const db = mysql.createConnection({
   host: 'localhost', // Could be an IP
   user: 'root',
-  password: 'Orquideapurpura6',
+  password: 'Admin123',
   database: 'notes_app',
 })
 
